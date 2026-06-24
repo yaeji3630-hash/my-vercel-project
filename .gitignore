@@ -9,3 +9,10 @@ dist
 *.log
 vercel
 .vercel
+.vscode
+.idea
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
