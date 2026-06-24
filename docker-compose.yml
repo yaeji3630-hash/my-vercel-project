@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   db:
     image: postgres:16-alpine
@@ -13,6 +11,11 @@ services:
       - "5432:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d deliverydb"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   web:
     build:
@@ -24,6 +27,7 @@ services:
       - "3001:3000"
     environment:
       - DATABASE_URL=postgresql://postgres:postgrespassword@db:5432/deliverydb?schema=public
+      - NEXTAUTH_SECRET=local-development-secret-change-in-vercel
       - WATCHPACK_POLLING=true
       - CI=true
     volumes:
@@ -31,7 +35,8 @@ services:
       - /app/node_modules
       - /app/.next
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
 volumes:
   pgdata:

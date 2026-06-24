@@ -105,7 +105,7 @@ export default function RestaurantPage({
       {/* Menu items listing */}
       <div className="space-y-6">
         <h2 className="text-2xl font-bold text-neutral-100 pb-2 border-b border-neutral-900">
-          Menu Menu
+          Menu
         </h2>
 
         {restaurant.menuItems.length === 0 ? (

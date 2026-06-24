@@ -29,9 +29,9 @@ export default function LoginPage() {
         router.push('/');
         router.refresh();
       } else {
-        setError(data.error || 'Failed to login.');
+        setError(data.error || 'Login failed.');
       }
-    } catch (err) {
+    } catch {
       setError('An error occurred. Please try again.');
     } finally {
       setLoading(false);
@@ -39,28 +39,24 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[calc(100vh-140px)] items-center justify-center px-4 py-12 sm:px-6 lg:px-8 bg-radial from-neutral-900 to-neutral-950">
-      <div className="w-full max-w-md space-y-8 rounded-2xl border border-neutral-800 bg-neutral-900/40 p-8 backdrop-blur-md shadow-2xl">
+    <div className="flex min-h-[calc(100vh-140px)] items-center justify-center bg-neutral-950 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md space-y-8 rounded-2xl border border-neutral-800 bg-neutral-900/40 p-8 shadow-2xl">
         <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-neutral-100">
-            Welcome Back
-          </h2>
-          <p className="mt-2 text-sm text-neutral-400">
-            Log in to order fresh gourmet dishes.
-          </p>
+          <h2 className="text-3xl font-bold tracking-tight text-neutral-100">Login</h2>
+          <p className="mt-2 text-sm text-neutral-400">Sign in to place orders and view your history.</p>
         </div>
 
         {error && (
-          <div className="rounded-lg bg-red-950/50 border border-red-800 p-3 text-sm text-red-200 text-center">
+          <div className="rounded-lg border border-red-800 bg-red-950/50 p-3 text-center text-sm text-red-200">
             {error}
           </div>
         )}
 
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <label htmlFor="email-address" className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block mb-2">
-                Email Address
+              <label htmlFor="email-address" className="mb-2 block text-xs font-semibold uppercase text-neutral-400">
+                Email
               </label>
               <input
                 id="email-address"
@@ -70,12 +66,12 @@ export default function LoginPage() {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full rounded-xl border border-neutral-800 bg-neutral-950 px-4 py-3 text-neutral-200 placeholder-neutral-500 focus:border-orange-500 focus:outline-none transition-colors"
+                className="w-full rounded-xl border border-neutral-800 bg-neutral-950 px-4 py-3 text-neutral-200 placeholder-neutral-500 transition-colors focus:border-orange-500 focus:outline-none"
                 placeholder="you@example.com"
               />
             </div>
             <div>
-              <label htmlFor="password" className="text-xs font-semibold text-neutral-400 uppercase tracking-wider block mb-2">
+              <label htmlFor="password" className="mb-2 block text-xs font-semibold uppercase text-neutral-400">
                 Password
               </label>
               <input
@@ -86,31 +82,27 @@ export default function LoginPage() {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full rounded-xl border border-neutral-800 bg-neutral-950 px-4 py-3 text-neutral-200 placeholder-neutral-500 focus:border-orange-500 focus:outline-none transition-colors"
-                placeholder="••••••••"
+                className="w-full rounded-xl border border-neutral-800 bg-neutral-950 px-4 py-3 text-neutral-200 placeholder-neutral-500 transition-colors focus:border-orange-500 focus:outline-none"
+                placeholder="Enter your password"
               />
             </div>
           </div>
 
-          <div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full rounded-xl bg-gradient-to-r from-orange-500 to-amber-500 py-3 text-center text-sm font-bold text-white hover:from-orange-600 hover:to-amber-600 transition-all shadow-lg shadow-orange-500/10 disabled:opacity-50"
-            >
-              {loading ? 'Logging in...' : 'Sign In'}
-            </button>
-          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full rounded-xl bg-orange-500 py-3 text-center text-sm font-bold text-white shadow-lg shadow-orange-500/10 transition-all hover:bg-orange-600 disabled:opacity-50"
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
         </form>
 
-        <div className="text-center mt-4">
-          <p className="text-sm text-neutral-400">
-            Don&apos;t have an account?{' '}
-            <Link href="/register" className="font-semibold text-orange-400 hover:text-orange-300 transition-colors">
-              Sign Up
-            </Link>
-          </p>
-        </div>
+        <p className="text-center text-sm text-neutral-400">
+          Need an account?{' '}
+          <Link href="/register" className="font-semibold text-orange-400 transition-colors hover:text-orange-300">
+            Sign up
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -1,10 +1,11 @@
-.PHONY: up down restart logs migrate seed studio rebuild
+.PHONY: up down restart logs migrate deploy-migrate seed studio rebuild
 
 up:
 	docker compose up -d --build
 	@echo "Waiting for database to be ready and running migrations..."
 	@sleep 5
-	docker compose exec -T web pnpm prisma migrate dev --name init || true
+	docker compose exec -T web pnpm prisma migrate deploy
+	docker compose exec -T web pnpm prisma db seed
 	@echo "Local development environment is running at http://localhost:3001"
 
 down:
@@ -18,6 +19,9 @@ logs:
 
 migrate:
 	docker compose exec web pnpm prisma migrate dev
+
+deploy-migrate:
+	docker compose exec web pnpm prisma migrate deploy
 
 seed:
 	docker compose exec web pnpm prisma db seed
